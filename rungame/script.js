@@ -104,9 +104,9 @@ setInterval(function () {
 
     if ((characterLeft == characterLeftStart) && (!gameOver)){
         counter--
-        countdown.innerHTML = counter;
+        countdown.innerHTML = `Game Over in<br>${counter} seconden`;
         if (counter == 0){
-            countdown.innerHTML = counter;
+            countdown.innerHTML = "Game Over";
             gameOver = true;
             gameObjects.forEach(element => {
                 element.speedModifier = 0;
@@ -125,6 +125,7 @@ function getSpeed(sensorSpeed) {
     if(gameOver){
         speed = 0;
         cyclingSpeed.innerHTML = "Game over";
+        levelSpeed.innerHTML = "Game over";
         return levelcount;
     } else{
         speed = Math.round(sensorSpeed, 0);
