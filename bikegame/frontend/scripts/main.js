@@ -577,7 +577,6 @@ function incrementLoading() {
 // functions only called through the Application
 
 function setSpeed(speed) {
-    alert("speed set");
     if (loadedcount == 36) {
         player.speed = speed;
         htmlSpeed.innerHTML = `${speed} km/h`;
