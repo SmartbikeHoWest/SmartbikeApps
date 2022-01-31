@@ -16,7 +16,6 @@ html {
     font-weight: 200;
     font-size: 30px;
     line-height: 20px;
-
 }
 
 body {
@@ -37,6 +36,52 @@ body {
 .c_hud_menu {
     width:500px;
 }
+
+.c-hud-loading-wrapper {
+    position:fixed;
+    background-color:cadetblue;
+    height:100vh;
+    width: 100vw;
+    top:0;
+    left:0;
+    /* width:100%; */
+}
+
+.c-hud-loading {
+    color:white;
+    text-align: center;
+    position:relative;
+    top:40vh;
+}
+
+.c-hud-start-menu {
+    position:fixed;
+    background-color:rgb(255,255,255,0.4);
+    height:100vh;
+    width: 100vw;
+    top:0;
+    left:0;
+}
+.c-difficulty {
+    position:fixed;
+    width:20vw;
+    height: 50vh;
+    top:25vh;
+    background-color: #111726;
+}
+
+.c-difficulty-1 {
+    left:10vw;
+}
+
+.c-difficulty-2 {
+    left:40vw;
+}
+
+.c-difficulty-3 {
+    left:70vw;
+}
+
 
 .c-hud-finished {
     position:relative;

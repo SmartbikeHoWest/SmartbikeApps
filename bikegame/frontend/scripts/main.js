@@ -107,6 +107,7 @@ class RoadSection {
         scene.add(this.road);
         this.road.position.y -= 80;
         this.road.position.z += this.z;
+        incrementLoading();
     }
 
     makePavement(){
@@ -131,7 +132,7 @@ class RoadSection {
         this.rightpavement.position.x += pavementWidth/2+100;
         this.rightpavement.position.z += this.z;
 
-        loadedcount ++;
+        incrementLoading();
     }
 
     updateZ(value){
@@ -200,7 +201,7 @@ class Buildings{
             this.buildings_r[i].position.y += building_pos_r[i][1];
             this.buildings_r[i].rotation.y += building_pos_r[i][3];
 
-            loadedcount ++;
+            incrementLoading();
         }
     }
 
@@ -240,20 +241,20 @@ class Folliage {
     }
 
     loadFolliage(){
-        let loadedcount = 0;
+        let folliageCount = 0;
         const gltfLoader = new THREE.GLTFLoader();
         for (let i = 0; i < 18; i++) {
             let model = `models/folliage/folliage${i+1}.glb`;
             // left side
             gltfLoader.load(model, (gltf) => {
-                loadedcount++;
+                folliageCount++;
                 const folliageModel = gltf.scene;
                 let scalef = folliage_pos[i][2];
                 folliageModel.scale.set(scalef, scalef, scalef);
                 folliageModel.position.z = 1000;
                 scene.add(folliageModel);
                 this.folliage[i] = folliageModel;
-                if (loadedcount == 18) {
+                if (folliageCount == 18) {
                     this.updateAllFolliage();
                     loadBike("models/bike.obj");
                 }
@@ -266,7 +267,7 @@ class Folliage {
             this.folliage[i].position.x += folliage_pos[i][0];
             this.folliage[i].position.y += folliage_pos[i][1];
 
-            loadedcount ++;
+            incrementLoading();
         }
 
     }
@@ -323,7 +324,7 @@ class FinishLine{
         this.flag.position.y += 40
         this.flag.position.z = this.z ;
 
-        loadedcount ++;
+        incrementLoading();
     }
 
 }
@@ -336,7 +337,7 @@ function loadBike(model) {
         obj.position.z = -20;
         scene.add(obj);
         bike = obj;
-        loadedcount ++;
+        incrementLoading();;
         loadBikes(model)       
     });
 
@@ -382,7 +383,7 @@ function loadBikes(model){
         obj.position.z = -20;
         scene.add(obj);
         otherBikes[0] = new Opponent(21.8,obj);
-        loadedcount ++;
+        incrementLoading();
     });
     objLoader.load(model, function(obj){
         obj.position.y = -80;
@@ -390,7 +391,7 @@ function loadBikes(model){
         obj.position.z = -20;
         scene.add(obj);
         otherBikes[1] = new Opponent(23.6,obj);
-        loadedcount ++;
+        incrementLoading();
     });
 
     buildings.addRandomBuilding(-200);
@@ -523,7 +524,25 @@ function animate() {
     }
 }
 
+function incrementLoading() {
+    loadedcount ++;
+    if (loadedcount == 36) {
+        document.querySelector(".js-loading").remove();
+        let startmenu = document.querySelector(".js-start-menu");
+        //startmenu.style.display = "block";
+        paused=false;
+        let difficultymenus = document.querySelectorAll(".js-difficulty");
+        for (let difficultymenu of difficultymenus) {
+            console.log(difficultymenu);
+            difficultymenu.addEventListener("clicked",function(){
+                paused=false;
+                console.log("clicked");
+            })
+        }
+        
+    }
 
+}
 
 function onKeyPressed() {
     document.addEventListener('keydown', (event) => {
@@ -535,7 +554,7 @@ function onKeyPressed() {
         if (code == "Space") {
             paused = !paused;
             //console.log(`paused game ${paused}`);
-            //console.log(loadedcount);
+            console.log(loadedcount);
             if (paused) {
                 track.pause();
                 return;
@@ -561,10 +580,6 @@ function onKeyPressed() {
 function getSpeed(speed) {
     player.speed = speed;
     htmlSpeed.innerHTML = `${speed} km/h`;
-    if (loadedcount == 33) {
-        pause = false;
-        loadedcount = 0;
-    }
 }
 
 
@@ -574,7 +589,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //console.log(htmlSpeed);
 
     track = document.createElement('audio')
-    track.src = "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3"
+    track.src = "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3";
     track.load();
 
         
