@@ -7,6 +7,7 @@ var title = document.getElementById("title");
 var cyclingSpeed = document.getElementById("cyclingspeed");
 var levelSpeed = document.getElementById("levelspeed");
 var countdown = document.getElementById("countdown");
+var countdownMessage = document.getElementById("countdownmessage");
 
 // --- get start location of the character
 var characterLeftStart = parseInt(getComputedStyle(character).getPropertyValue("left"));
@@ -104,7 +105,7 @@ setInterval(function () {
 
     if ((characterLeft == characterLeftStart) && (!gameOver)){
         counter--
-        countdown.innerHTML = `Game Over in<br>${counter} seconden`;
+        countdown.innerHTML = counter;
 
         if (counter > 5){
             countdown.style.color = "white";
@@ -115,9 +116,9 @@ setInterval(function () {
         else if (counter < 4){
             countdown.style.color = "red";
         }
-        
+
         if (counter == 0){
-            countdown.innerHTML = "Game Over";
+            countdownMessage.innerHTML = "Game Over";
             gameOver = true;
             gameObjects.forEach(element => {
                 element.speedModifier = 0;
