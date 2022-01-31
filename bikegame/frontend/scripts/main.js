@@ -525,7 +525,8 @@ function animate() {
 
 function incrementLoading() {
     loadedcount ++;
-    if (loadedcount == 36) {
+    //console.log(loadedcount)
+    if (loadedcount == 37) {
         document.querySelector(".js-loading").remove();
         //let startmenu = document.querySelector(".js-start-menu");
         //startmenu.style.display = "block";
@@ -576,10 +577,10 @@ function incrementLoading() {
 
 // functions only called through the Application
 
-function setSpeed(speed) {
-    if (loadedcount == 36) {
-        player.speed = speed;
-        htmlSpeed.innerHTML = `${speed} km/h`;
+function setSpeed(sensorspeed) {
+    if (loadedcount == 37) {
+        player.speed = sensorspeed;
+        htmlSpeed.innerHTML = `${sensorspeed} km/h`;
     }
 }
 
