@@ -23,10 +23,11 @@ let randomIndex = 0;
 let levelcount = 1;
 let characterReset = false;
 let counter = 10;
-let gameOver = false;
+let gameOver = true;
 
-let speed = 15;
+let speed = 0;
 cyclingSpeed.innerHTML = `Huidige snelheid: <br>${speed} km/u`;
+levelSpeed.innerHTML = "Druk op het scherm om te starten";
 
 // --- array animals
 const animals = ["img/icons/test_dog.gif", "img/icons/cat_test.gif"];
@@ -44,6 +45,10 @@ backgroundLayer4.src = 'img/layers/layer-4.png';
 const backgroundLayer5 = new Image();
 backgroundLayer5.src = 'img/layers/layer-5.png';
 
+function startGame(){
+    levelSpeed.innerHTML = `Minimum snelheid: <br> ${levelcount + 10} km/u`;
+    gameOver = false;
+};
 
 setInterval(function () {
     // --- get location values of character
