@@ -450,7 +450,6 @@ function pseudoRandomColor() {
 
 function updateDistance() {
     player.remainingDistance = (finish_line.z - bike.position.z)/(finish_line.z)*1000;
-    // player.remainingDistance -= player.speed/3600*1000/100;
     let displayDistance = Math.ceil(player.remainingDistance);
 
     
@@ -528,52 +527,52 @@ function incrementLoading() {
     loadedcount ++;
     if (loadedcount == 36) {
         document.querySelector(".js-loading").remove();
-        let startmenu = document.querySelector(".js-start-menu");
+        //let startmenu = document.querySelector(".js-start-menu");
         //startmenu.style.display = "block";
         paused=false;
-        let difficultymenus = document.querySelectorAll(".js-difficulty");
-        for (let difficultymenu of difficultymenus) {
-            console.log(difficultymenu);
-            difficultymenu.addEventListener("clicked",function(){
-                paused=false;
-                console.log("clicked");
-            })
-        }
+        // let difficultymenus = document.querySelectorAll(".js-difficulty");
+        // for (let difficultymenu of difficultymenus) {
+        //     console.log(difficultymenu);
+        //     difficultymenu.addEventListener("clicked",function(){
+        //         paused=false;
+        //         console.log("clicked");
+        //     })
+        // }
         
     }
 
 }
 
-function onKeyPressed() {
-    document.addEventListener('keydown', (event) => {
-        var name = event.key;
-        var code = event.code;
-        // Alert the key name and key code on keydown
-        //console.log(`Key pressed ${name} \r\n Key code value: ${code}`);
+// function onKeyPressed() {
+//     document.addEventListener('keydown', (event) => {
+//         var name = event.key;
+//         var code = event.code;
+//         // Alert the key name and key code on keydown
+//         //console.log(`Key pressed ${name} \r\n Key code value: ${code}`);
 
-        if (code == "Space") {
-            paused = !paused;
-            //console.log(`paused game ${paused}`);
-            console.log(loadedcount);
-            if (paused) {
-                track.pause();
-                return;
-            }
-            track.play();
-            return;
-        }
-        if (code == "ArrowUp") {
-            player.speed ++;
-            htmlSpeed.innerHTML = `${player.speed} km/h`;
-            return;
-        }
-        if (code == "ArrowDown") {
-            player.speed --;
-            htmlSpeed.innerHTML = `${player.speed} km/h`; 
-            return;
-        }
-    }, false);
-}
+//         if (code == "Space") {
+//             paused = !paused;
+//             //console.log(`paused game ${paused}`);
+//             console.log(loadedcount);
+//             if (paused) {
+//                 track.pause();
+//                 return;
+//             }
+//             track.play();
+//             return;
+//         }
+//         if (code == "ArrowUp") {
+//             player.speed ++;
+//             htmlSpeed.innerHTML = `${player.speed} km/h`;
+//             return;
+//         }
+//         if (code == "ArrowDown") {
+//             player.speed --;
+//             htmlSpeed.innerHTML = `${player.speed} km/h`; 
+//             return;
+//         }
+//     }, false);
+// }
 
 // functions only called through the Application
 
@@ -601,7 +600,7 @@ document.addEventListener("DOMContentLoaded", function () {
     scene.add(pointlight);
     pointlight.decay = 0;
 
-    onKeyPressed();
+    // onKeyPressed();
     addRoadSections();
     buildings = new Buildings();
     finish_line = new FinishLine();
