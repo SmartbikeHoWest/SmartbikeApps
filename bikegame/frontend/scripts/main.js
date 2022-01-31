@@ -458,14 +458,23 @@ function updateDistance() {
     }
 
     if (player.remainingDistance < 0) {
-        displayDistance = 0;
-
         if (!finished){
             finished = true;
             alert("finished");
+            htmlSpeed.style.display = "none";
+            htmlDistance.style.display = "none";
         }
     }
 }
+
+function restart(){
+    htmlSpeed.style.display = "block";
+    htmlDistance.style.display = "block";
+
+    //add code to reset everything
+}
+
+
 
 function updatePlayer() {
     //player.z += -player.speed/2;
