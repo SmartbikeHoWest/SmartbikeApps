@@ -105,6 +105,17 @@ setInterval(function () {
     if ((characterLeft == characterLeftStart) && (!gameOver)){
         counter--
         countdown.innerHTML = `Game Over in<br>${counter} seconden`;
+
+        if (counter > 5){
+            countdown.style.color = "white";
+        }
+        else if (counter == 4 || counter == 5){
+            countdown.style.color = "orange";
+        }
+        else if (counter < 4){
+            countdown.style.color = "red";
+        }
+        
         if (counter == 0){
             countdown.innerHTML = "Game Over";
             gameOver = true;
