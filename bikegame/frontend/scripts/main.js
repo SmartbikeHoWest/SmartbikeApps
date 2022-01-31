@@ -408,18 +408,13 @@ function loadBikes(model){
 
 // player code
 class Player {
-    constructor(initial_z,initial_x,initial_y,remainingDistance){
+    constructor(remainingDistance){
         this.speed = 20;
-        this.x = initial_x,
-        this.y = initial_y;
-        this.z = initial_z;
         this.remainingDistance = remainingDistance;
-        this.score = 0;
-        this.startTime = new Date();
     }
 }
 
-let player = new Player(0,0,0,1000);
+let player = new Player(1000);
 
 function pseudoRandomX() {
     moved_x += 0.1;
@@ -467,17 +462,7 @@ function updateDistance() {
     }
 }
 
-function restart(){
-    htmlSpeed.style.display = "block";
-    htmlDistance.style.display = "block";
-
-    //add code to reset everything
-}
-
-
-
 function updatePlayer() {
-    //player.z += -player.speed/2;
     camera.translateZ(-player.speed/2);
     bike.position.z += -player.speed/2;
     // console.log(bike.position.z);
@@ -600,6 +585,10 @@ function setDifficulty(difficulty) {
 
 function isFinished(){
     return finished;
+}
+
+function setFinished(boolvar){
+    finished = boolvar;
 }
 
 
