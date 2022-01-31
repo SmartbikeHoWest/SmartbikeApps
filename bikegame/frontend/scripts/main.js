@@ -437,6 +437,26 @@ function pseudoRandomColor() {
     return red << 16 | green << 8 | blue;
 }
 
+function updateDistance() {
+    player.remainingDistance = (finish_line.z - bike.position.z)/(finish_line.z)*1000;
+    // player.remainingDistance -= player.speed/3600*1000/100;
+    let displayDistance = Math.ceil(player.remainingDistance);
+
+    
+    if (htmlDistance) {
+        htmlDistance.innerText =  `${displayDistance}m`;
+    }
+
+    if (player.remainingDistance < 0) {
+        displayDistance = 0;
+
+        if (!finished){
+            finished = true;
+            alert("finished");
+        }
+    }
+}
+
 function updatePlayer() {
     //player.z += -player.speed/2;
     camera.translateZ(-player.speed/2);
@@ -451,23 +471,7 @@ function updatePlayer() {
     randomBikeX = pseudoRandomX();
     bike.position.x += randomBikeX;
     bike.rotation.y += randomBikeX/200;
-    bike.rotation.z += randomBikeX/200;
-
-    player.remainingDistance = (finish_line.z - bike.position.z)/finish_line.z*1000;
-    // player.remainingDistance -= player.speed/3600*1000/100;
-    let displayDistance = player.remainingDistance - player.remainingDistance%1
-
-    if (displayDistance <= 0) {
-        if (!finished){
-            alert('You reached the goal!'); 
-            finished = true;
-        }
-        displayDistance = 0;
-    }
-    if (htmlDistance) {
-        htmlDistance.innerText =  `${displayDistance}m`;
-    }
-    
+    bike.rotation.z += randomBikeX/200;   
 }
 
 function updateRoads(){
@@ -501,6 +505,7 @@ function animate() {
     renderer.render(scene,camera);
     
     if (!paused) {
+        updateDistance();
         updatePlayer();
         updateRoads();
         updateOpponents();
@@ -556,7 +561,6 @@ document.addEventListener("DOMContentLoaded", function () {
     track = document.createElement('audio')
     track.src = "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3"
     track.load();
-    track.play();
 
         
     const background = new THREE.TextureLoader().load("img/background.png");
