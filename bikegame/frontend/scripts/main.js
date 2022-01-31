@@ -528,20 +528,8 @@ function incrementLoading() {
     //console.log(loadedcount)
     if (loadedcount == 37) {
         document.querySelector(".js-loading").remove();
-        //let startmenu = document.querySelector(".js-start-menu");
-        //startmenu.style.display = "block";
-        paused=false;
-        // let difficultymenus = document.querySelectorAll(".js-difficulty");
-        // for (let difficultymenu of difficultymenus) {
-        //     console.log(difficultymenu);
-        //     difficultymenu.addEventListener("clicked",function(){
-        //         paused=false;
-        //         console.log("clicked");
-        //     })
-        // }
-        
+        paused=false;      
     }
-
 }
 
 // function onKeyPressed() {
@@ -577,11 +565,32 @@ function incrementLoading() {
 
 // functions only called through the Application
 
+// writing data to the game
 function setSpeed(sensorspeed) {
     if (loadedcount == 37) {
         player.speed = sensorspeed;
         htmlSpeed.innerHTML = `${sensorspeed} km/h`;
     }
+}
+
+let bikePresets = [
+    [18,16],
+    [22,24],
+    [27,28],
+]
+
+function setDifficulty(difficulty) {
+    otherBikes[0].initial_speed = bikePresets[difficulty][0];
+    otherBikes[0].avg_speed = bikePresets[difficulty][1];
+
+    otherBikes[1].initial_speed = bikePresets[difficulty][0];
+    otherBikes[1].avg_speed = bikePresets[difficulty][1];
+}
+
+// reading data from the game
+
+function isFinished(){
+    return finished;
 }
 
 
