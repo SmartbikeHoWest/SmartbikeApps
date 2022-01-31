@@ -97,10 +97,10 @@ img {
     font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
     position: absolute;
     color: white;
-    margin-left: 92%;
-    margin-right: 8%;
-    width: 60px;
+    margin-left: 82%;
+    width: 130px;
     top: 10px;
+    text-align: end;
 }
 
 

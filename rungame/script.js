@@ -26,7 +26,7 @@ let counter = 10;
 let gameOver = false;
 
 let speed = 15;
-cyclingSpeed.innerHTML = speed + " km/u";
+cyclingSpeed.innerHTML = `Huidige snelheid: <br>${speed} km/u`;
 
 // --- array animals
 const animals = ["img/icons/test_dog.gif", "img/icons/cat_test.gif"];
@@ -81,8 +81,8 @@ setInterval(function () {
         // --- collision detected
         // --- collision event + set next level event
         levelcount++;
-        title.innerHTML = "Level " + levelcount;
-        levelSpeed.innerHTML = 10 + levelcount + " km/u";
+        title.innerHTML = `level ${levelcount}`;
+        levelSpeed.innerHTML = `Minimum snelheid: <br> ${levelcount + 10} km/u`;
         character.style.left = characterLeftStart + "px";
         randomIndex = Math.floor(Math.random() * animals.length);
         animalImage.src = animals[randomIndex];
@@ -97,20 +97,18 @@ setInterval(function () {
     // --- get location of character
     var characterLeft = parseInt(getComputedStyle(character).getPropertyValue("left"));
 
-    if (characterLeft == characterLeftStart){
+    if ((characterLeft == characterLeftStart) && (!gameOver)){
         counter--
         countdown.innerHTML = counter;
         if (counter == 0){
             countdown.innerHTML = counter;
             gameOver = true;
-            levelcount = 1;
-            title.innerHTML = "Level " + levelcount;
-            randomIndex = Math.floor(Math.random() * animals.length);
-            animalImage.src = animals[randomIndex];
-            animal.style.top = animalTops[randomIndex] + "px";
+            gameObjects.forEach(element => {
+                element.speedModifier = 0;
+            });
         }
     }
-    else{
+    else if(!gameOver){
         counter = 10;
         countdown.innerHTML = counter;
     }
@@ -118,8 +116,16 @@ setInterval(function () {
 
 // --- get speed from c# and the sensor
 function getSpeed(sensorSpeed) {
-    speed = Math.round(sensorSpeed, 0);
-    cyclingSpeed.innerHTML = speed + "km/u";
+    
+    if(gameOver){
+        speed = 0;
+        cyclingSpeed.innerHTML = "Game over";
+        return levelcount;
+    } else{
+        speed = Math.round(sensorSpeed, 0);
+        cyclingSpeed.innerHTML = `Huidige snelheid: <br>${speed} km/u`;
+        return "on";
+    }
 }
 
 // --- code used for the background, this is displayed in a canvas
