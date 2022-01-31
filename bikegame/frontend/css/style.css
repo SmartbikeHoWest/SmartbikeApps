@@ -2,7 +2,7 @@
 @font-face {
     font-family: "MarioKart";
     font-weight: 200;
-    src: url("../fonts/mario_kart_f2.ttf") format("ttf");
+    src: url("../fonts/mario_kart_f2.ttf") format("truetype");
 }
 
 canvas {
@@ -12,32 +12,40 @@ canvas {
 }
 
 html {
-    font-family: "MarioKart",Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: 200;
     font-size: 30px;
     line-height: 20px;
+
 }
 
 body {
     overflow: hidden; /* Hide scrollbars */
 }
 
-.c-hud{
-    position:fixed;
-    top:0;
-    left:0;
-}
-
 .c-hud-data {
-    position:fixed;
+    position:relative;
+    text-align: right;
     height: 0px;
     top:32px;
     width:300px;
     margin-left: auto;
     margin-right:40px;
+    color:white;
 }
-.c-hud-txt .c-hud-data{
+
+.c_hud_menu {
+    width:500px;
+}
+
+.c-hud-finished {
     position:relative;
-    color:aquamarine;
-    text-align: right;
+    text-align: center;
+    font-family: "MarioKart";
+    font-weight: 200;
+    top:200px;
+    margin-left: auto;
+    margin-right:auto;
+    color:white;
+    text-shadow: 0 3px 0 #ccc, 0 3px 0 #ccc;
 }

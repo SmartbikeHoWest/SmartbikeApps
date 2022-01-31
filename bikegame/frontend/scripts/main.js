@@ -81,6 +81,7 @@ var randomBikeX;
 // other data
 let paused = true;
 let finished = false;
+let loadedcount = 0;
 
 // html data
 let htmlSpeed;
@@ -129,6 +130,8 @@ class RoadSection {
         this.rightpavement.position.y -= 80;
         this.rightpavement.position.x += pavementWidth/2+100;
         this.rightpavement.position.z += this.z;
+
+        loadedcount ++;
     }
 
     updateZ(value){
@@ -196,6 +199,8 @@ class Buildings{
             this.buildings_r[i].position.x += building_pos_r[i][0];
             this.buildings_r[i].position.y += building_pos_r[i][1];
             this.buildings_r[i].rotation.y += building_pos_r[i][3];
+
+            loadedcount ++;
         }
     }
 
@@ -261,6 +266,7 @@ class Folliage {
             this.folliage[i].position.x += folliage_pos[i][0];
             this.folliage[i].position.y += folliage_pos[i][1];
 
+            loadedcount ++;
         }
 
     }
@@ -316,6 +322,8 @@ class FinishLine{
 
         this.flag.position.y += 40
         this.flag.position.z = this.z ;
+
+        loadedcount ++;
     }
 
 }
@@ -328,7 +336,8 @@ function loadBike(model) {
         obj.position.z = -20;
         scene.add(obj);
         bike = obj;
-        loadBikes(model)
+        loadedcount ++;
+        loadBikes(model)       
     });
 
 }
@@ -373,6 +382,7 @@ function loadBikes(model){
         obj.position.z = -20;
         scene.add(obj);
         otherBikes[0] = new Opponent(21.8,obj);
+        loadedcount ++;
     });
     objLoader.load(model, function(obj){
         obj.position.y = -80;
@@ -380,8 +390,8 @@ function loadBikes(model){
         obj.position.z = -20;
         scene.add(obj);
         otherBikes[1] = new Opponent(23.6,obj);
+        loadedcount ++;
     });
-
 
     buildings.addRandomBuilding(-200);
     buildings.addRandomBuilding(-400);
@@ -525,6 +535,7 @@ function onKeyPressed() {
         if (code == "Space") {
             paused = !paused;
             //console.log(`paused game ${paused}`);
+            //console.log(loadedcount);
             if (paused) {
                 track.pause();
                 return;
@@ -550,6 +561,10 @@ function onKeyPressed() {
 function getSpeed(speed) {
     player.speed = speed;
     htmlSpeed.innerHTML = `${speed} km/h`;
+    if (loadedcount == 33) {
+        pause = false;
+        loadedcount = 0;
+    }
 }
 
 
