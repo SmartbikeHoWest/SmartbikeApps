@@ -353,6 +353,7 @@ class Opponent{
         this.initialize();
         this.timeuntilsprint = randomInt(500,700);
         this.sprint = false;
+        this.finished = false;
     }
 
     initialize(){
@@ -361,6 +362,11 @@ class Opponent{
 
     move(){
         this.bike.position.z += -this.avg_speed/2;
+
+        if (finish_line.z > this.bike.position.z) {
+            this.finished = true;
+        }
+
         this.timeuntilsprint --;
         if (this.timeuntilsprint == 0) {
             console.log("sprinting!")
@@ -373,6 +379,8 @@ class Opponent{
             this.avg_speed = this.initial_speed;
             this.timeuntilsprint = randomInt(500,700);
         }
+
+
     }
 
 }
@@ -587,6 +595,23 @@ function setDifficulty(difficulty) {
     htmlDistance.style.display = "block";
 }
 
+function startGame(setting){
+    // if (setting = "endless") {
+    //     pause = false;
+    // }
+    if (setting == "easy"){
+        setDifficulty(0);
+        return;
+    }
+    if (setting == "intermediate"){
+        setDifficulty(1);
+        return;
+    }
+    if (setting == "hard"){
+        setDifficulty(2);
+        return;
+    }
+}
 // reading data from the game
 
 function isFinished(){
@@ -605,24 +630,19 @@ function isLoadStartMenu(){
     return false;
 }
 
-function startGame(setting){
-    // if (setting = "endless") {
-    //     pause = false;
-    // }
-    if (setting == "easy"){
-        setDifficulty(0);
-        return;
-    }
-    if (setting == "intermediate"){
-        setDifficulty(1);
-        return;
-    }
-    if (setting == "hard"){
-        setDifficulty(2);
-        return;
-    }
-}
+let bikePlacements = ["Je kwam eerste!", "Je kwam tweede!","Je kwam derde!"];
 
+function getPosition(){
+    fasterCount = 0;
+
+    for (let opponent of otherBikes){
+        if (opponent.finished) {
+            fasterCount++;
+        }
+    }
+
+    return bikePlacements[fasterCount];
+}
 
 
 document.addEventListener("DOMContentLoaded", function () {
