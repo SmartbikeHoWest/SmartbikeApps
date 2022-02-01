@@ -363,6 +363,7 @@ class Opponent{
     move(){
         this.bike.position.z += -this.avg_speed/2;
 
+        this.finished = false;
         if (finish_line.z > this.bike.position.z) {
             this.finished = true;
         }
@@ -420,6 +421,7 @@ function loadBikes(model){
 class Player {
     constructor(remainingDistance){
         this.speed = 20;
+        this.position = 1;
         this.remainingDistance = remainingDistance;
     }
 }
@@ -474,11 +476,13 @@ function updateDistance() {
 function updatePlayer() {
     camera.translateZ(-player.speed/2);
     bike.position.z += -player.speed/2;
+
     // console.log(bike.position.z);
 
     // if (pointlight.position.z > bike.position.z+100) {
     //     pointlight.position.z -= 200;
     // }
+
     pointlight.position.z = bike.position.z;
 
     randomBikeX = pseudoRandomX();
@@ -641,6 +645,7 @@ function getPosition(){
         }
     }
 
+    player.position = fasterCount + 1;
     return bikePlacements[fasterCount];
 }
 
