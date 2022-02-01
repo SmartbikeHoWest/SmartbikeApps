@@ -595,6 +595,8 @@ function setDifficulty(difficulty) {
     otherBikes[1].avg_speed = bikePresets[difficulty][1];
 
     paused = false;
+    track.play();
+    
     htmlSpeed.style.display = "block";
     htmlDistance.style.display = "block";
 }
