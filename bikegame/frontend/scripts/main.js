@@ -81,6 +81,7 @@ var randomBikeX;
 // other data
 let paused = true;
 let finished = false;
+let checked = false;
 let loadedcount = 0;
 
 // html data
@@ -584,13 +585,15 @@ function setDifficulty(difficulty) {
 // reading data from the game
 
 function isFinished(){
-    return finished;
+    if (finished & checked) {
+        return true;
+    }
+    return false;
 }
 
-function setFinished(boolvar){
-    finished = boolvar;
+function setChecked(){
+    checked = true;
 }
-
 
 document.addEventListener("DOMContentLoaded", function () {
     htmlSpeed = document.querySelector(".js-speed");
