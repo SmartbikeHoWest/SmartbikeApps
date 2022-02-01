@@ -585,14 +585,12 @@ function setDifficulty(difficulty) {
 
 function isFinished(){
     if (finished & !checked) {
+        checked = true;
         return true;
     }
     return false;
 }
 
-function setChecked(){
-    checked = true;
-}
 
 document.addEventListener("DOMContentLoaded", function () {
     htmlSpeed = document.querySelector(".js-speed");
