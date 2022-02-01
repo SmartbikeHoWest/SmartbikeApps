@@ -81,6 +81,9 @@ var randomBikeX;
 // other data
 let paused = true;
 let finished = false;
+let checked = false;
+let loadedcount = 0;
+let loadStartMenu = false;
 
 // html data
 let htmlSpeed;
@@ -106,6 +109,7 @@ class RoadSection {
         scene.add(this.road);
         this.road.position.y -= 80;
         this.road.position.z += this.z;
+        incrementLoading();
     }
 
     makePavement(){
@@ -129,6 +133,8 @@ class RoadSection {
         this.rightpavement.position.y -= 80;
         this.rightpavement.position.x += pavementWidth/2+100;
         this.rightpavement.position.z += this.z;
+
+        incrementLoading();
     }
 
     updateZ(value){
@@ -196,6 +202,8 @@ class Buildings{
             this.buildings_r[i].position.x += building_pos_r[i][0];
             this.buildings_r[i].position.y += building_pos_r[i][1];
             this.buildings_r[i].rotation.y += building_pos_r[i][3];
+
+            incrementLoading();
         }
     }
 
@@ -235,20 +243,20 @@ class Folliage {
     }
 
     loadFolliage(){
-        let loadedcount = 0;
+        let folliageCount = 0;
         const gltfLoader = new THREE.GLTFLoader();
         for (let i = 0; i < 18; i++) {
             let model = `models/folliage/folliage${i+1}.glb`;
             // left side
             gltfLoader.load(model, (gltf) => {
-                loadedcount++;
+                folliageCount++;
                 const folliageModel = gltf.scene;
                 let scalef = folliage_pos[i][2];
                 folliageModel.scale.set(scalef, scalef, scalef);
                 folliageModel.position.z = 1000;
                 scene.add(folliageModel);
                 this.folliage[i] = folliageModel;
-                if (loadedcount == 18) {
+                if (folliageCount == 18) {
                     this.updateAllFolliage();
                     loadBike("models/bike.obj");
                 }
@@ -261,6 +269,7 @@ class Folliage {
             this.folliage[i].position.x += folliage_pos[i][0];
             this.folliage[i].position.y += folliage_pos[i][1];
 
+            incrementLoading();
         }
 
     }
@@ -316,6 +325,8 @@ class FinishLine{
 
         this.flag.position.y += 40
         this.flag.position.z = this.z ;
+
+        incrementLoading();
     }
 
 }
@@ -328,7 +339,8 @@ function loadBike(model) {
         obj.position.z = -20;
         scene.add(obj);
         bike = obj;
-        loadBikes(model)
+        incrementLoading();;
+        loadBikes(model)       
     });
 
 }
@@ -373,6 +385,7 @@ function loadBikes(model){
         obj.position.z = -20;
         scene.add(obj);
         otherBikes[0] = new Opponent(21.8,obj);
+        incrementLoading();
     });
     objLoader.load(model, function(obj){
         obj.position.y = -80;
@@ -380,8 +393,8 @@ function loadBikes(model){
         obj.position.z = -20;
         scene.add(obj);
         otherBikes[1] = new Opponent(23.6,obj);
+        incrementLoading();
     });
-
 
     buildings.addRandomBuilding(-200);
     buildings.addRandomBuilding(-400);
@@ -397,18 +410,13 @@ function loadBikes(model){
 
 // player code
 class Player {
-    constructor(initial_z,initial_x,initial_y,remainingDistance){
+    constructor(remainingDistance){
         this.speed = 20;
-        this.x = initial_x,
-        this.y = initial_y;
-        this.z = initial_z;
         this.remainingDistance = remainingDistance;
-        this.score = 0;
-        this.startTime = new Date();
     }
 }
 
-let player = new Player(0,0,0,1000);
+let player = new Player(1000);
 
 function pseudoRandomX() {
     moved_x += 0.1;
@@ -439,7 +447,6 @@ function pseudoRandomColor() {
 
 function updateDistance() {
     player.remainingDistance = (finish_line.z - bike.position.z)/(finish_line.z)*1000;
-    // player.remainingDistance -= player.speed/3600*1000/100;
     let displayDistance = Math.ceil(player.remainingDistance);
 
     
@@ -448,17 +455,15 @@ function updateDistance() {
     }
 
     if (player.remainingDistance < 0) {
-        displayDistance = 0;
-
         if (!finished){
             finished = true;
-            alert("finished");
+            htmlSpeed.style.display = "none";
+            htmlDistance.style.display = "none";
         }
     }
 }
 
 function updatePlayer() {
-    //player.z += -player.speed/2;
     camera.translateZ(-player.speed/2);
     bike.position.z += -player.speed/2;
     // console.log(bike.position.z);
@@ -513,44 +518,96 @@ function animate() {
     }
 }
 
-
-
-function onKeyPressed() {
-    document.addEventListener('keydown', (event) => {
-        var name = event.key;
-        var code = event.code;
-        // Alert the key name and key code on keydown
-        //console.log(`Key pressed ${name} \r\n Key code value: ${code}`);
-
-        if (code == "Space") {
-            paused = !paused;
-            //console.log(`paused game ${paused}`);
-            if (paused) {
-                track.pause();
-                return;
-            }
-            track.play();
-            return;
-        }
-        if (code == "ArrowUp") {
-            player.speed ++;
-            htmlSpeed.innerHTML = `${player.speed} km/h`;
-            return;
-        }
-        if (code == "ArrowDown") {
-            player.speed --;
-            htmlSpeed.innerHTML = `${player.speed} km/h`; 
-            return;
-        }
-    }, false);
+function incrementLoading() {
+    loadedcount ++;
+    //console.log(loadedcount)
+    if (loadedcount == 37) {
+        document.querySelector(".js-loading").remove();
+        loadStartMenu = true;
+    }
 }
+
+
+// function onKeyPressed() {
+//     document.addEventListener('keydown', (event) => {
+//         var name = event.key;
+//         var code = event.code;
+//         // Alert the key name and key code on keydown
+//         //console.log(`Key pressed ${name} \r\n Key code value: ${code}`);
+
+//         if (code == "Space") {
+//             paused = !paused;
+//             //console.log(`paused game ${paused}`);
+//             console.log(loadedcount);
+//             if (paused) {
+//                 track.pause();
+//                 return;
+//             }
+//             track.play();
+//             return;
+//         }
+//         if (code == "ArrowUp") {
+//             player.speed ++;
+//             htmlSpeed.innerHTML = `${player.speed} km/h`;
+//             return;
+//         }
+//         if (code == "ArrowDown") {
+//             player.speed --;
+//             htmlSpeed.innerHTML = `${player.speed} km/h`; 
+//             return;
+//         }
+//     }, false);
+// }
 
 // functions only called through the Application
 
-function getSpeed(speed) {
-    player.speed = speed;
-    htmlSpeed.innerHTML = `${speed} km/h`;
+// writing data to the game
+function setSpeed(sensorspeed) {
+    if (loadedcount == 37) {
+        player.speed = sensorspeed;
+        htmlSpeed.innerHTML = `${sensorspeed} km/h`;
+    }
 }
+
+let bikePresets = [
+    [18,16],
+    [22,24],
+    [27,28],
+]
+
+function setDifficulty(difficulty) {
+    otherBikes[0].initial_speed = bikePresets[difficulty][0];
+    otherBikes[0].avg_speed = bikePresets[difficulty][1];
+
+    otherBikes[1].initial_speed = bikePresets[difficulty][0];
+    otherBikes[1].avg_speed = bikePresets[difficulty][1];
+}
+
+// reading data from the game
+
+function isFinished(){
+    if (finished & !checked) {
+        checked = true;
+        return true;
+    }
+    return false;
+}
+
+function isLoadStartMenu(){
+    if (loadStartMenu) {
+        loadStartMenu = false;
+        return true;
+    }
+    return false;
+}
+
+function startGame(setting){
+    // if (setting = "endless") {
+    //     pause = false;
+    // }
+    pause = false;
+}
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -559,7 +616,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //console.log(htmlSpeed);
 
     track = document.createElement('audio')
-    track.src = "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3"
+    track.src = "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Directionless_EP/Broke_For_Free_-_01_-_Night_Owl.mp3";
     track.load();
 
         
@@ -571,7 +628,7 @@ document.addEventListener("DOMContentLoaded", function () {
     scene.add(pointlight);
     pointlight.decay = 0;
 
-    onKeyPressed();
+    // onKeyPressed();
     addRoadSections();
     buildings = new Buildings();
     finish_line = new FinishLine();
