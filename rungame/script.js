@@ -25,8 +25,9 @@ let levelcount = 1;
 let characterReset = false;
 let counter = 10;
 let gameOver = true;
+let speed = 14;
+let gameStart = false;
 
-let speed = 0;
 cyclingSpeed.innerHTML = `Huidige snelheid: <br>${speed} km/u`;
 levelSpeed.innerHTML = "Druk op het scherm om te starten";
 
@@ -49,68 +50,69 @@ backgroundLayer5.src = 'img/layers/layer-5.png';
 function startGame(){
     levelSpeed.innerHTML = `Minimum snelheid: <br> ${levelcount + 10} km/u`;
     gameOver = false;
+    gameStart = true;
+};
+
+function changeSpeed(s){
+    speed = s;
 };
 
 setInterval(function () {
-    // --- get location values of character
-    var characterLeft = parseInt(getComputedStyle(character).getPropertyValue("left"));
-    var characterWidth = parseInt(getComputedStyle(character).getPropertyValue("width"));
-    var characterHeight = parseInt(getComputedStyle(character).getPropertyValue("height"));
-    var characterY = parseInt(getComputedStyle(character).getPropertyValue("top"));
+    if (gameStart) {
+        // --- get location values of character
+        var characterLeft = parseInt(getComputedStyle(character).getPropertyValue("left"));
+        var characterWidth = parseInt(getComputedStyle(character).getPropertyValue("width"));
+        var characterHeight = parseInt(getComputedStyle(character).getPropertyValue("height"));
+        var characterY = parseInt(getComputedStyle(character).getPropertyValue("top"));
 
-    // --- get location values of the animal (dog is the default animal)
-    var dogLeft = parseInt(getComputedStyle(animal).getPropertyValue("left"));
-    var dogWidth = parseInt(getComputedStyle(animal).getPropertyValue("width"));
-    var dogHeight = parseInt(getComputedStyle(animal).getPropertyValue("height"));
-    var dogY = parseInt(getComputedStyle(animal).getPropertyValue("top"));
-    var animalImage = document.getElementById("animalImage");
+        // --- get location values of the animal (dog is the default animal)
+        var dogLeft = parseInt(getComputedStyle(animal).getPropertyValue("left"));
+        var dogWidth = parseInt(getComputedStyle(animal).getPropertyValue("width"));
+        var dogHeight = parseInt(getComputedStyle(animal).getPropertyValue("height"));
+        var dogY = parseInt(getComputedStyle(animal).getPropertyValue("top"));
+        var animalImage = document.getElementById("animalImage");
 
-    // --- speed diff
-    if (speed > 10 + (levelcount)) {
-        characterLeft = (characterLeft + (speed - 10));
-        character.style.left = characterLeft + "px";
-    }
-    if (characterLeft <= 5){
-        character.style.left = 5;
-    }
-    else {
-        characterLeft = (characterLeft + (speed - 10));
-        character.style.left = characterLeft + "px";
-    }    
+        // --- speed diff
+        if (speed > 10 + (levelcount)) {
+            characterLeft = (characterLeft + (speed - 10));
+            character.style.left = characterLeft + "px";
+        }
+        if (characterLeft <= 5){
+            character.style.left = 5;
+        }
+        else {
+            characterLeft = (characterLeft + (speed - 10));
+            character.style.left = characterLeft + "px";
+        }    
 
-    // --- check if the animal div and character div collide
-    if (characterLeft < dogLeft + dogWidth &&
-        characterLeft - 80 + characterWidth > dogLeft &&
-        characterY < dogY + dogHeight &&
-        characterY + characterHeight > dogY) 
-    {
-        // --- collision detected
-        // --- collision event + set next level event
-        levelcount++;
-        title.innerHTML = `level ${levelcount}`;
-        levelSpeed.innerHTML = `Minimum snelheid: <br> ${levelcount + 10} km/u`;
-        character.style.left = characterLeftStart + "px";
-        randomIndex = Math.floor(Math.random() * animals.length);
-        animalImage.src = animals[randomIndex];
-        animal.style.top = animalTops[randomIndex] + "px";
+        // --- check if the animal div and character div collide
+        if (characterLeft < dogLeft + dogWidth &&
+            characterLeft - 80 + characterWidth > dogLeft &&
+            characterY < dogY + dogHeight &&
+            characterY + characterHeight > dogY) 
+        {
+            // --- collision detected
+            // --- collision event + set next level event
+            levelcount++;
+            title.innerHTML = `level ${levelcount}`;
+            levelSpeed.innerHTML = `Minimum snelheid: <br> ${levelcount + 10} km/u`;
+            character.style.left = characterLeftStart + "px";
+            randomIndex = Math.floor(Math.random() * animals.length);
+            animalImage.src = animals[randomIndex];
+            animal.style.top = animalTops[randomIndex] + "px";
+        }
+    
+        // --- when no if --> no collision
     }
-   
-    // --- when no if --> no collision
 }, 100);
 
-// --- check every second if character is at start point --> if true for 10 seconds straight, game over
+// --- check every second if speed is slower than levelspeed
 setInterval(function () {
-    // --- get location of character
-    var characterLeft = parseInt(getComputedStyle(character).getPropertyValue("left"));
-
-    if ((characterLeft == characterLeftStart) && (!gameOver)){
+    if ((speed < 10 + levelcount) && (!gameOver)){
         counter--
         countdown.innerHTML = counter;
 
-        if (counter > 5){
-            countdown.style.color = "white";
-        }
-        else if (counter == 4 || counter == 5){
+        if (counter == 4 || counter == 5){
             countdown.style.color = "orange";
         }
         else if (counter < 4){
@@ -128,6 +130,7 @@ setInterval(function () {
     else if(!gameOver){
         counter = 10;
         countdown.innerHTML = counter;
+        countdown.style.color = "white";
     }
 }, 1000);
 
@@ -176,6 +179,7 @@ class Layer {
         ctx.drawImage(this.image, this.x2, this.y, this.width, this.height);
     }
 }
+
 
 // --- set the speed of the layers
 const layer1 = new Layer(backgroundLayer1, 0.1);
