@@ -83,6 +83,7 @@ let paused = true;
 let finished = false;
 let checked = false;
 let loadedcount = 0;
+let loadStartMenu = false;
 
 // html data
 let htmlSpeed;
@@ -522,9 +523,10 @@ function incrementLoading() {
     //console.log(loadedcount)
     if (loadedcount == 37) {
         document.querySelector(".js-loading").remove();
-        paused=false;      
+        loadStartMenu = true;
     }
 }
+
 
 // function onKeyPressed() {
 //     document.addEventListener('keydown', (event) => {
@@ -590,6 +592,22 @@ function isFinished(){
     }
     return false;
 }
+
+function isLoadStartMenu(){
+    if (loadStartMenu) {
+        loadStartMenu = false;
+        return true;
+    }
+    return false;
+}
+
+function startGame(setting){
+    // if (setting = "endless") {
+    //     pause = false;
+    // }
+    pause = false;
+}
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
