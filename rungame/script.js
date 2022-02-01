@@ -73,17 +73,32 @@ setInterval(function () {
         var animalImage = document.getElementById("animalImage");
 
         // --- speed diff
-        if (speed > 10 + (levelcount)) {
-            characterLeft = (characterLeft + (speed - (10 + levelcount)));
-            character.style.left = characterLeft + "px";
+        if ((10 + levelcount) < 25){
+            if (speed > 10 + (levelcount)) {
+                characterLeft = (characterLeft + (speed - (10 + levelcount)));
+                character.style.left = characterLeft + "px";
+            }
+            if (characterLeft <= 5){
+                character.style.left = 5;
+            }
+            else {
+                characterLeft = (characterLeft + (speed - (10 + levelcount)));
+                character.style.left = characterLeft + "px";
+            } 
         }
-        if (characterLeft <= 5){
-            character.style.left = 5;
+        else{
+            if (speed > 25) {
+                characterLeft = (characterLeft + (speed - 25));
+                character.style.left = characterLeft + "px";
+            }
+            if (characterLeft <= 5){
+                character.style.left = 5;
+            }
+            else {
+                characterLeft = (characterLeft + (speed - 25));
+                character.style.left = characterLeft + "px";
+            } 
         }
-        else {
-            characterLeft = (characterLeft + (speed - (10 + levelcount)));
-            character.style.left = characterLeft + "px";
-        }    
 
         // --- check if the animal div and character div collide
         if (characterLeft < dogLeft + dogWidth &&
@@ -95,11 +110,17 @@ setInterval(function () {
             // --- collision event + set next level event
             levelcount++;
             title.innerHTML = `level ${levelcount}`;
-            levelSpeed.innerHTML = `Minimum snelheid: <br> ${levelcount + 10} km/u`;
             character.style.left = characterLeftStart + "px";
             randomIndex = Math.floor(Math.random() * animals.length);
             animalImage.src = animals[randomIndex];
             animal.style.top = animalTops[randomIndex] + "px";
+            
+            if ((levelcount + 10) > 25){
+                levelSpeed.innerHTML = `Minimum snelheid: <br> ${25} km/u`;
+            }
+            else{
+                levelSpeed.innerHTML = `Minimum snelheid: <br> ${levelcount + 10} km/u`;
+            }
         }
     
         // --- when no if --> no collision
@@ -140,11 +161,12 @@ function getSpeed(sensorSpeed) {
     if(gameOver){
         speed = 0;
         cyclingSpeed.innerHTML = "Game over";
-        levelSpeed.innerHTML = "Game over";
+        levelSpeed.innerHTML = "Game Over";
         return levelcount;
     } else{
         speed = Math.round(sensorSpeed, 0);
         cyclingSpeed.innerHTML = `Huidige snelheid: <br>${speed} km/u`;
+
         return "on";
     }
 }
