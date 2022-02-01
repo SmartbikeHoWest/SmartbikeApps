@@ -1,5 +1,8 @@
-# SmartbikeApps
+# Smartbike Webapplications Group 2
 
-This is a repo to run games and videos in the SmartBike app 
+This repository features the games and videos to be ran inside teh Smartbike Application 
+by students of Howest Kortrijk MCT, for Howest Sport & Beweging.
 
-This is a project for HoWest MCT and Sport en Beweging
+The main repository can be found here, with more information about the project.
+
+https://github.com/DevreeseJorik/smartbike_G2/tree/main
