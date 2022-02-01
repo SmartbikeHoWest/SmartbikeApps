@@ -25,7 +25,7 @@ let levelcount = 1;
 let characterReset = false;
 let counter = 10;
 let gameOver = true;
-let speed = 31;
+let speed = 0;
 let gameStart = false;
 
 cyclingSpeed.innerHTML = `Huidige snelheid: <br>${speed} km/u`;
