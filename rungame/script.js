@@ -25,7 +25,7 @@ let levelcount = 1;
 let characterReset = false;
 let counter = 10;
 let gameOver = true;
-let speed = 14;
+let speed = 0;
 let gameStart = false;
 
 cyclingSpeed.innerHTML = `Huidige snelheid: <br>${speed} km/u`;
@@ -74,14 +74,14 @@ setInterval(function () {
 
         // --- speed diff
         if (speed > 10 + (levelcount)) {
-            characterLeft = (characterLeft + (speed - 10));
+            characterLeft = (characterLeft + (speed - (10 + levelcount)));
             character.style.left = characterLeft + "px";
         }
         if (characterLeft <= 5){
             character.style.left = 5;
         }
         else {
-            characterLeft = (characterLeft + (speed - 10));
+            characterLeft = (characterLeft + (speed - (10 + levelcount)));
             character.style.left = characterLeft + "px";
         }    
 
