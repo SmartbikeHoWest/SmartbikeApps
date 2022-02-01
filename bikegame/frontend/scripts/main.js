@@ -456,7 +456,6 @@ function updateDistance() {
     if (player.remainingDistance < 0) {
         if (!finished){
             finished = true;
-            alert("finished");
             htmlSpeed.style.display = "none";
             htmlDistance.style.display = "none";
         }
