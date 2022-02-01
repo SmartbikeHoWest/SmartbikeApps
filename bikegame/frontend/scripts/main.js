@@ -581,6 +581,10 @@ function setDifficulty(difficulty) {
 
     otherBikes[1].initial_speed = bikePresets[difficulty][1];
     otherBikes[1].avg_speed = bikePresets[difficulty][1];
+
+    paused = false;
+    htmlSpeed.style.display = "block";
+    htmlDistance.style.display = "block";
 }
 
 // reading data from the game
@@ -607,17 +611,14 @@ function startGame(setting){
     // }
     if (setting == "easy"){
         setDifficulty(0);
-        paused = false;
         return;
     }
     if (setting == "intermediate"){
         setDifficulty(1);
-        paused = false;
         return;
     }
     if (setting == "hard"){
         setDifficulty(2);
-        paused = false;
         return;
     }
 }
