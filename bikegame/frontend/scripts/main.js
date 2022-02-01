@@ -577,9 +577,9 @@ let bikePresets = [
 
 function setDifficulty(difficulty) {
     otherBikes[0].initial_speed = bikePresets[difficulty][0];
-    otherBikes[0].avg_speed = bikePresets[difficulty][1];
+    otherBikes[0].avg_speed = bikePresets[difficulty][0];
 
-    otherBikes[1].initial_speed = bikePresets[difficulty][0];
+    otherBikes[1].initial_speed = bikePresets[difficulty][1];
     otherBikes[1].avg_speed = bikePresets[difficulty][1];
 }
 
@@ -605,7 +605,21 @@ function startGame(setting){
     // if (setting = "endless") {
     //     pause = false;
     // }
-    pause = false;
+    if (setting == "easy"){
+        setDifficulty(0);
+        pause = false;
+        return;
+    }
+    if (setting == "intermediate"){
+        setDifficulty(1);
+        pause = false;
+        return;
+    }
+    if (setting == "hard"){
+        setDifficulty(2);
+        pause = false;
+        return;
+    }
 }
 
 
