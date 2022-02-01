@@ -161,7 +161,7 @@ function getSpeed(sensorSpeed) {
     if(gameOver){
         speed = 0;
         cyclingSpeed.innerHTML = "Game over";
-        levelSpeed.innerHTML = "Game over";
+        levelSpeed.innerHTML = "Game Over";
         return levelcount;
     } else{
         speed = Math.round(sensorSpeed, 0);
