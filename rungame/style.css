@@ -17,7 +17,7 @@ h1 {
     margin-right: auto;
     left: 0;
     right: 0;
-    top: 20px;
+    top: -5px;
     text-align: center;
 }
 
@@ -71,14 +71,15 @@ img {
 
 /* --- allocationg labels to their place */
 
-#countdown {
+#countdownmessage {
     font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
     position: absolute;
     color: white;
     margin-left: 1%;
     margin-right: 99%;
-    width: 120px;
+    width: 200px;
     top: 10px;
+    font-size: 25px;
 }
 
 #levelspeed {
@@ -89,18 +90,20 @@ img {
     margin-right: auto;
     left: 0;
     right: 0;
-    top: 75px;
+    top: 50px;
     text-align: center;
+    font-size: 25px;
 }
 
 #cyclingspeed {
     font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
     position: absolute;
     color: white;
-    margin-left: 82%;
-    width: 130px;
+    margin-left: 74%;
+    width: 200px;
     top: 10px;
     text-align: end;
+    font-size: 25px;
 }
 
 
