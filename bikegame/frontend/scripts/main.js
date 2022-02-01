@@ -607,17 +607,17 @@ function startGame(setting){
     // }
     if (setting == "easy"){
         setDifficulty(0);
-        pause = false;
+        paused = false;
         return;
     }
     if (setting == "intermediate"){
         setDifficulty(1);
-        pause = false;
+        paused = false;
         return;
     }
     if (setting == "hard"){
         setDifficulty(2);
-        pause = false;
+        paused = false;
         return;
     }
 }
