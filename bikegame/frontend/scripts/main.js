@@ -584,7 +584,7 @@ function setDifficulty(difficulty) {
 // reading data from the game
 
 function isFinished(){
-    if (finished & checked) {
+    if (finished & !checked) {
         return true;
     }
     return false;
